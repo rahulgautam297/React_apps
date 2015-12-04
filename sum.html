@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <title>React Tutorial</title>
+
+</head>
+
+<body>
+<div id="app">
+</div>
+    <script src="https://fb.me/react-0.11.1.js"></script>
+    <script src="https://fb.me/JSXTransformer-0.11.1.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/jsx">
+    /** @jsx React.DOM */
+
+ var MessageBox= React.createClass({
+
+
+
+ 	handleAdd: function(e) {
+ 		check=isNaN(parseFloat(this.refs.amount1.getDOMNode().value,10))	
+ 		var set1 = null;
+ 		if(check===false)
+ 			set1=parseFloat(this.refs.amount1.getDOMNode().value,10);
+ 		check1=isNaN(parseFloat(this.refs.amount2.getDOMNode().value,10))	
+ 		var set2 = null;
+ 		if(check1===false)
+ 			set2=parseFloat(this.refs.amount2.getDOMNode().value,10);
+ 		var sum=set1+set2;
+ 		this.setState({
+ 			sum: sum,
+ 			payment1: set1,
+ 			payment2: set2
+ 		});
+ 	},
+
+ 	getInitialState: function(){
+ 		return{
+ 			payment1: 0,
+ 			payment2:0,
+ 			sum:0
+ 			};
+ 		
+ 	},
+
+ 	render: function(){
+
+ 		return (
+ 				<div className= "jumbotron container" >
+ 				<h1>sum it!</h1>
+ 				<input ref= "amount1" type= "text" onChange={this.handleAdd} value= {this.state.payment1} />
+ 				<input ref= "amount2" type= "text" onChange={this.handleAdd} value= {this.state.payment2} />
+ 				<span> {this.state.sum}</span>
+ 				</div>
+ 				);
+ 			}
+ 	});
+
+
+ var ReactComponent= React.renderComponent(
+ 	<MessageBox />,
+ 	document.getElementById('app')
+ 	)
+
+</script>
+</body>
+</html>

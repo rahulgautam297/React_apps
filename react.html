@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <title>React Tutorial</title>
+
+</head>
+
+<body>
+<div id="app">
+</div>
+    <script src="https://fb.me/react-0.11.1.js"></script>
+    <script src="https://fb.me/JSXTransformer-0.11.1.js"></script>
+    <script type="text/jsx">
+    /** @jsx React.DOM */
+
+ var MessageBox= React.createClass({
+
+ 	deleteMessage: function(message){
+ 	var messages= this.state.messages;
+ 	var newMessages=[];
+ 	for(var i=0;i<messages.length;i++){
+ 		if(messages[i]!==message)
+ 			newMessages.push(messages[i]);
+ 	}
+ 		this.setState({
+ 			messages: newMessages	
+ 		});
+ 	},
+
+ 	handleAdd: function(e) {	
+ 		var newMessage = this.refs.newMessage.getDOMNode().value;
+ 		var newMessages= this.state.messages.concat([newMessage]);
+
+ 		this.setState({
+ 			messages: newMessages	
+ 		});
+ 	},
+
+ 	getInitialState: function(){
+ 		return{
+ 			isVisible: true,
+ 			messages: [
+ 				"hello",
+ 				 "123",
+ 				 "hey you!"
+ 					]
+ 			};
+ 	},
+
+ 	render: function(){
+
+ 		var inlineStyles = {
+ 			display: this.state.isVisible ? 'block':'none'
+ 			};
+
+ 		var messages = this.state.messages.map(function(message){
+
+ 			return <SubMessage message={message} onDelete= {this.deleteMessage} />;
+ 		}.bind(this));
+
+ 		return (
+ 				<div className= "jumbotron container" style={inlineStyles}>
+ 				<h1>Your to-do list :)</h1>
+ 				{messages }
+ 				<input ref= "newMessage" type= "text" />
+ 				<button className="btn btn-success" onClick={this.handleAdd}>Add Note</button>
+ 				</div>
+ 				);
+ 			}
+ 	});
+
+ var SubMessage= React.createClass({
+ 	handleDelete: function(e){
+	this.props.onDelete(this.props.message)
+ 	},
+ 	getDefaultProps: function(){
+		return{
+			message: "It's nice to meet you!"
+		};
+
+ 	},
+ 	render: function(){
+ 		return (<div>
+ 				<span>{this.props.message} &nbsp; &nbsp;</span>
+ 				<button onClick={this.handleDelete} className="btn btn-danger">X</button>
+ 				</div>
+ 				);
+ 			}
+ 	});
+
+ var ReactComponent= React.renderComponent(
+ 	<MessageBox />,
+ 	document.getElementById('app')
+ 	)
+
+</script>
+</body>
+</html>
